@@ -1,9 +1,12 @@
 pipeline {
     agent any
+    tools {
+        jdk 'java-21'
+    }
     stages {
-        stage("Build Maven") {
+        stage("Build") {
             steps {
-                sh 'mvn -B clean package'
+                bat 'mvn clean install -DskipTests'
             }
         }
         stage("Run Gatling") {
@@ -14,6 +17,11 @@ pipeline {
                 always {
                     gatlingArchive()
                 }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                bat "mvn jar:jar deploy:deploy"
             }
         }
     }
