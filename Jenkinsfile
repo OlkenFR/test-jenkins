@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        jdk 'java-21'
-    }
     stages {
         stage("Build") {
             steps {
